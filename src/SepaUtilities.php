@@ -16,9 +16,11 @@ namespace AbcAeffchen\SepaUtilities;
 class SepaUtilities
 {
     // credit transfers version
+    const SEPA_PAIN_001_001_03 = 100103;
     const SEPA_PAIN_001_002_03 = 100203;
     const SEPA_PAIN_001_003_03 = 100303;
     // direct debit versions
+    const SEPA_PAIN_008_001_02 = 800102;
     const SEPA_PAIN_008_002_02 = 800202;
     const SEPA_PAIN_008_003_02 = 800302;
 
@@ -725,15 +727,20 @@ class SepaUtilities
     {
         switch($version)
         {
+            case self::SEPA_PAIN_001_001_03:
+                $requiredKeys = array('pmtInfId', 'dbtr', 'iban');
+                break;
             case self::SEPA_PAIN_001_002_03:
                 $requiredKeys = array('pmtInfId', 'dbtr', 'iban', 'bic');
                 break;
             case self::SEPA_PAIN_001_003_03:
                 $requiredKeys = array('pmtInfId', 'dbtr', 'iban');
                 break;
+            case self::SEPA_PAIN_008_001_02:
+                $requiredKeys = array('pmtInfId', 'lclInstrm', 'seqTp', 'cdtr', 'iban', 'ci');
+                break;
             case self::SEPA_PAIN_008_002_02:
-                $requiredKeys = array('pmtInfId', 'lclInstrm', 'seqTp', 'cdtr', 'iban', 'bic',
-                                      'ci');
+                $requiredKeys = array('pmtInfId', 'lclInstrm', 'seqTp', 'cdtr', 'iban', 'bic', 'ci');
                 break;
             case self::SEPA_PAIN_008_003_02:
                 $requiredKeys = array('pmtInfId', 'lclInstrm', 'seqTp', 'cdtr', 'iban', 'ci');
@@ -749,11 +756,17 @@ class SepaUtilities
     {
         switch($version)
         {
+            case self::SEPA_PAIN_001_001_03:
+                $requiredKeys = array('pmtId', 'instdAmt', 'iban', 'cdtr');
+                break;
             case self::SEPA_PAIN_001_002_03:
                 $requiredKeys = array('pmtId', 'instdAmt', 'iban', 'bic', 'cdtr');
                 break;
             case self::SEPA_PAIN_001_003_03:
                 $requiredKeys = array('pmtId', 'instdAmt', 'iban', 'cdtr');
+                break;
+            case self::SEPA_PAIN_008_001_02:
+                $requiredKeys = array('pmtId', 'instdAmt', 'mndtId', 'dtOfSgntr', 'dbtr', 'iban');
                 break;
             case self::SEPA_PAIN_008_002_02:
                 $requiredKeys = array('pmtId', 'instdAmt', 'mndtId', 'dtOfSgntr', 'dbtr', 'iban','bic');
